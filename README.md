@@ -5,6 +5,10 @@ haunts your browser and evolves with your real focus and study habits.**
 
 Built with Kiro for Kiroween 2026 — Category: **Resurrection**.
 
+> Live demo (public, runs in your browser): https://muse.ai/s/tamaghost-public-demo-xzxb76exsxgqxcnd/CfebkCkbbRuZEFbjs5Cn_5BWE0BdVXXHU29LLh5eVm8
+> Note: the public demo keeps the pet for the open session; this repo's full
+> app persists pet state across reloads with server-side decay.
+
 ## What it does
 
 - **Adopt a pixel ghost.** Name your Baby Boo and it moves in — a hand-drawn
