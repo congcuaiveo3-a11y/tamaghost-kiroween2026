@@ -1,0 +1,629 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="dark light" />
+<link rel="icon" href="data:," />
+<title>TamaGhost — Public Demo & GitHub Repo Kit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#12101d; --bg2:#1a1730; --panel:#201c3a; --panel2:#282243; --line:#3d3566;
+  --ink:#f4f1ff; --muted:#b9b2d9; --faint:#8f87b8;
+  --orange:#ff8a3d; --orange-d:#e56f1f; --mint:#7dffcb; --mint-d:#2fbf8f;
+  --pink:#ff7ab8; --gold:#ffd166; --red:#ff6b6b; --sky:#7cc7ff;
+  --screen:#0e2a24; --screen2:#12382f;
+  --radius:18px;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){
+  :root{
+    --bg:#efeafd; --bg2:#e6defc; --panel:#ffffff; --panel2:#f6f2ff; --line:#d5cbf5;
+    --ink:#241d4d; --muted:#5b5480; --faint:#7c76a0;
+    --screen:#0e2a24; --screen2:#12382f;
+    color-scheme:light;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"Nunito",system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;-webkit-text-size-adjust:100%}
+.px{font-family:"Press Start 2P",monospace}
+.wrap{max-width:1080px;margin:0 auto;padding:20px 16px 64px}
+a{color:var(--sky)}
+button{font-family:inherit;cursor:pointer;min-height:44px}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+
+/* ---------- header ---------- */
+.top{text-align:center;padding:18px 0 6px}
+.top .badge{display:inline-block;background:var(--panel2);border:1.5px solid var(--line);color:var(--gold);border-radius:999px;padding:6px 14px;font-size:.78rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+h1{font-family:"Press Start 2P",monospace;font-size:clamp(1.35rem,5.2vw,2.3rem);line-height:1.5;margin:18px 0 10px;color:var(--ink)}
+h1 .boo{color:var(--mint)}
+.tagline{color:var(--muted);font-size:clamp(1rem,2.6vw,1.15rem);max-width:620px;margin:0 auto;font-weight:600}
+.stars{color:var(--gold);letter-spacing:.5em;font-size:.8rem;margin-top:10px}
+
+/* ---------- device ---------- */
+.device{margin:26px auto 0;max-width:560px;background:var(--panel);border:2px solid var(--line);border-radius:28px;padding:18px 16px 20px;box-shadow:0 18px 40px rgba(0,0,0,.35)}
+.device-top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
+.device-top .px{font-size:.62rem;color:var(--faint);letter-spacing:.04em}
+.pill{font-size:.75rem;font-weight:900;padding:5px 11px;border-radius:999px;background:var(--panel2);border:1.5px solid var(--line);color:var(--muted);white-space:nowrap}
+.pill.on{color:#0c221b;background:var(--mint);border-color:var(--mint)}
+.screen{background:radial-gradient(120% 120% at 50% 0%,var(--screen2),var(--screen));border-radius:18px;border:3px solid #081a15;padding:18px 14px 14px;position:relative;overflow:hidden;color:#eafff5}
+.screen::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0 2px,transparent 2px 4px);pointer-events:none}
+.moon{position:absolute;top:12px;right:14px;font-size:1.15rem;opacity:.9}
+.ground{position:absolute;left:0;right:0;bottom:0;height:26px;background:rgba(0,0,0,.25);border-top:2px dashed rgba(125,255,203,.25)}
+.pet-stage{min-height:172px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;position:relative;z-index:1;padding-bottom:20px}
+.ghost-wrap{animation:bob 2.6s ease-in-out infinite;filter:drop-shadow(0 10px 14px rgba(0,0,0,.45))}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+@media (prefers-reduced-motion: reduce){.ghost-wrap{animation:none} html{scroll-behavior:auto}}
+.ghost-wrap.sleeping{animation:none;opacity:.85}
+.zzz{position:absolute;top:6px;right:22%;font-family:"Press Start 2P",monospace;color:var(--sky);font-size:.8rem;animation:bob 2s ease-in-out infinite}
+.pet-name{font-family:"Press Start 2P",monospace;font-size:.85rem;margin-top:10px;text-align:center;line-height:1.6}
+.pet-sub{font-size:.85rem;color:#a9e8cd;font-weight:700;text-align:center}
+.bubble{background:#fff;color:#17352b;border-radius:14px;padding:10px 13px;font-weight:700;font-size:.95rem;margin:12px 2px 0;position:relative;z-index:1;min-height:48px}
+.bubble::before{content:"";position:absolute;top:-8px;left:50%;margin-left:-8px;border:8px solid transparent;border-bottom-color:#fff;border-top:0}
+
+/* adopt */
+.adopt{position:relative;z-index:1;text-align:center;padding:8px 4px 22px}
+.adopt p{color:#c9f5e2;font-weight:700;margin:6px 0 14px}
+.adopt-row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.adopt input{flex:1 1 180px;min-height:48px;border-radius:12px;border:2px solid #2fbf8f;background:#0a1f19;color:#eafff5;padding:10px 14px;font-size:1rem;font-weight:700;font-family:inherit}
+.btn{border:0;border-radius:12px;padding:11px 18px;font-weight:900;font-size:.98rem;background:var(--orange);color:#2a1503;box-shadow:0 4px 0 var(--orange-d);transition:transform .08s}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--orange-d)}
+.btn.mint{background:var(--mint);color:#0c221b;box-shadow:0 4px 0 var(--mint-d)}
+.btn.mint:active{box-shadow:0 1px 0 var(--mint-d)}
+.btn.ghostbtn{background:var(--panel2);color:var(--ink);border:1.5px solid var(--line);box-shadow:none}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.btn.small{padding:8px 13px;font-size:.88rem;min-height:40px}
+
+/* stats */
+.stats{margin-top:16px;display:grid;gap:10px}
+.stat{display:grid;grid-template-columns:104px 1fr 40px;align-items:center;gap:10px;font-size:.9rem;font-weight:800}
+.stat .bar{height:14px;background:var(--panel2);border:1.5px solid var(--line);border-radius:999px;overflow:hidden}
+.stat .fill{height:100%;border-radius:999px;transition:width .5s ease}
+.fill.hunger{background:var(--orange)} .fill.happy{background:var(--pink)} .fill.energy{background:var(--sky)}
+.fill.low{background:var(--red)!important}
+.stat .val{text-align:right;font-variant-numeric:tabular-nums;color:var(--muted)}
+.xp-row{margin-top:14px}
+.xp-head{display:flex;justify-content:space-between;font-size:.85rem;font-weight:800;color:var(--muted);flex-wrap:wrap;gap:4px}
+.xp-bar{height:12px;background:var(--panel2);border:1.5px solid var(--line);border-radius:999px;overflow:hidden;margin-top:5px}
+.xp-fill{height:100%;background:var(--gold);transition:width .5s ease}
+.evo-track{display:flex;justify-content:space-between;margin-top:14px;gap:6px;text-align:center}
+.evo{flex:1;background:var(--panel2);border:1.5px solid var(--line);border-radius:12px;padding:8px 4px;font-size:.72rem;font-weight:800;color:var(--faint)}
+.evo.active{border-color:var(--gold);color:var(--ink);background:rgba(255,209,102,.12)}
+.evo .px{font-size:.52rem;display:block;margin-bottom:5px;line-height:1.5}
+
+/* actions */
+.actions{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:16px}
+.act{border-radius:14px;border:1.5px solid var(--line);background:var(--panel2);color:var(--ink);font-weight:900;font-size:.92rem;padding:10px 4px;display:flex;flex-direction:column;align-items:center;gap:3px;min-height:62px;justify-content:center}
+.act .ic{font-size:1.25rem;line-height:1}
+.act:active{transform:scale(.97)}
+.act:disabled{opacity:.4;cursor:not-allowed}
+@media (max-width:420px){.actions{grid-template-columns:repeat(2,1fr)}}
+
+/* focus */
+.focus{margin-top:18px;background:var(--panel2);border:1.5px solid var(--line);border-radius:16px;padding:14px}
+.focus h3{margin:0 0 4px;font-size:1rem}
+.focus p{margin:0 0 10px;color:var(--muted);font-size:.88rem;font-weight:600}
+.timer-display{font-family:"Press Start 2P",monospace;font-size:clamp(1.5rem,7vw,2rem);text-align:center;padding:10px 0 4px;color:var(--ink)}
+.presets{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:10px 0}
+.preset{border-radius:999px;border:1.5px solid var(--line);background:var(--panel);color:var(--ink);font-weight:900;padding:8px 16px;min-height:40px}
+.preset.sel{background:var(--gold);color:#33230a;border-color:var(--gold)}
+.timer-btns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.focus-meta{text-align:center;color:var(--muted);font-size:.87rem;font-weight:700;margin-top:10px}
+.log{margin-top:14px;font-size:.86rem;color:var(--muted);max-height:118px;overflow:auto;background:var(--panel);border:1.5px solid var(--line);border-radius:12px;padding:9px 12px}
+.log div+div{margin-top:4px}
+.reset-row{text-align:center;margin-top:14px}
+.linkbtn{background:none;border:0;color:var(--faint);font-weight:800;text-decoration:underline;min-height:36px;padding:6px 10px;font-size:.88rem}
+
+/* ---------- sections ---------- */
+section{margin-top:44px}
+.sec-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+.sec-head .num{font-family:"Press Start 2P",monospace;font-size:.7rem;background:var(--orange);color:#2a1503;border-radius:8px;padding:7px 9px}
+h2{font-size:clamp(1.25rem,3.6vw,1.6rem);margin:0;line-height:1.3}
+.lede{color:var(--muted);font-weight:600;max-width:720px;margin:4px 0 16px}
+.card{background:var(--panel);border:1.5px solid var(--line);border-radius:var(--radius);padding:18px}
+.card+.card{margin-top:14px}
+.card h3{margin:0 0 8px;font-size:1.05rem}
+.card p{margin:0 0 10px;color:var(--muted);font-weight:600}
+.card p:last-child{margin-bottom:0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:720px){.grid2{grid-template-columns:1fr}}
+ol.steps{margin:0;padding-left:22px;color:var(--muted);font-weight:600}
+ol.steps li+li{margin-top:9px}
+ol.steps b, .card b{color:var(--ink)}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:1px 6px;font-size:.86em;color:var(--gold);word-break:break-all}
+pre{background:#0d0b1c;color:#d9fbe9;border:1.5px solid var(--line);border-radius:12px;padding:14px;font-size:.82rem;line-height:1.6;margin:0 0 12px;white-space:pre-wrap;word-break:break-word}
+@media (prefers-color-scheme: light){pre{background:#171233}}
+pre .cm{color:#8f87b8}
+.check{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.check li{display:flex;gap:10px;align-items:flex-start;background:var(--panel2);border:1.5px solid var(--line);border-radius:12px;padding:11px 13px;font-weight:700;font-size:.95rem}
+.check .box{flex:0 0 auto;width:22px;height:22px;border-radius:6px;border:2px solid var(--mint-d);margin-top:1px;position:relative}
+.check li.done .box{background:var(--mint)}
+.check li.done .box::after{content:"✓";position:absolute;inset:0;display:grid;place-items:center;color:#0c221b;font-weight:900;font-size:.85rem}
+.check small{display:block;color:var(--muted);font-weight:600}
+.btn-row{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
+.note{border-radius:12px;padding:13px 15px;font-weight:700;font-size:.94rem;margin-top:14px}
+.note.warn{background:rgba(255,107,107,.12);border:1.5px solid var(--red);color:var(--ink)}
+.note.ok{background:rgba(125,255,203,.1);border:1.5px solid var(--mint-d);color:var(--ink)}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(80px);background:var(--ink);color:var(--bg);font-weight:900;padding:12px 20px;border-radius:999px;box-shadow:0 10px 30px rgba(0,0,0,.4);transition:transform .3s ease;z-index:50;max-width:92vw;text-align:center;font-size:.92rem}
+.toast.show{transform:translateX(-50%) translateY(0)}
+footer{margin-top:48px;text-align:center;color:var(--faint);font-weight:700;font-size:.88rem}
+footer .px{font-size:.58rem;display:block;margin-bottom:8px;color:var(--faint)}
+textarea.fallback{position:absolute;left:-9999px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <span class="badge">Kiroween 2026 · Resurrection · Public demo</span>
+    <h1>TAMA<span class="boo">GHOST</span></h1>
+    <p class="tagline">Your 90s Tamagotchi came back as a ghost. Adopt a Baby Boo, care for it, focus together — and watch it evolve. This page <b>is</b> the working demo: play it right here, no install, no account.</p>
+    <div class="stars" aria-hidden="true">★ ★ ★</div>
+  </header>
+
+  <!-- ============ PLAYABLE DEMO ============ -->
+  <div class="device" id="demo">
+    <div class="device-top">
+      <span class="px">TAMAGHOST v1</span>
+      <span class="pill" id="statePill">No pet yet</span>
+    </div>
+
+    <div class="screen">
+      <span class="moon" aria-hidden="true">🌙</span>
+      <!-- adopt view -->
+      <div class="adopt" id="adoptView">
+        <div class="ghost-wrap" id="adoptGhost"></div>
+        <p>A little ghost is waiting to be adopted.<br>Give it a name to begin.</p>
+        <div class="adopt-row">
+          <input id="nameInput" type="text" maxlength="16" placeholder="e.g. Boo, Mochi, Casper…" autocomplete="off" aria-label="Name your ghost" />
+          <button class="btn mint" id="adoptBtn" type="button">Adopt 👻</button>
+        </div>
+      </div>
+      <!-- pet view -->
+      <div id="petView" hidden>
+        <div class="pet-stage">
+          <div class="ghost-wrap" id="ghostWrap"></div>
+          <div class="zzz" id="zzz" hidden>Z z z</div>
+          <div class="pet-name" id="petName">—</div>
+          <div class="pet-sub" id="petStage">Baby Boo · 0 XP</div>
+        </div>
+        <div class="ground" aria-hidden="true"></div>
+        <div class="bubble" id="bubble">…</div>
+      </div>
+    </div>
+
+    <div id="carePanel" hidden>
+      <div class="stats" aria-label="Pet stats">
+        <div class="stat"><span>🍔 Hunger</span><div class="bar"><div class="fill hunger" id="barHunger" style="width:80%"></div></div><span class="val" id="valHunger">80</span></div>
+        <div class="stat"><span>💗 Happiness</span><div class="bar"><div class="fill happy" id="barHappy" style="width:75%"></div></div><span class="val" id="valHappy">75</span></div>
+        <div class="stat"><span>⚡ Energy</span><div class="bar"><div class="fill energy" id="barEnergy" style="width:70%"></div></div><span class="val" id="valEnergy">70</span></div>
+      </div>
+
+      <div class="xp-row">
+        <div class="xp-head"><span>⭐ XP — earned by focusing (+2 XP / minute)</span><span id="xpText">0 / 60 XP to Young Phantom</span></div>
+        <div class="xp-bar"><div class="xp-fill" id="xpFill" style="width:0%"></div></div>
+        <div class="evo-track">
+          <div class="evo" id="evo0"><span class="px">STAGE 1</span>👻 Baby Boo<br>0 XP</div>
+          <div class="evo" id="evo1"><span class="px">STAGE 2</span>👻 Young Phantom<br>60 XP</div>
+          <div class="evo" id="evo2"><span class="px">STAGE 3</span>👑 Grown Specter<br>180 XP</div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="act" id="btnFeed" type="button"><span class="ic">🍔</span>Feed</button>
+        <button class="act" id="btnPlay" type="button"><span class="ic">🎾</span>Play</button>
+        <button class="act" id="btnSleep" type="button"><span class="ic">🌙</span><span id="sleepLabel">Sleep</span></button>
+        <button class="act" id="btnTalk" type="button"><span class="ic">💬</span>Talk</button>
+      </div>
+
+      <div class="focus">
+        <h3>⏱ Focus together</h3>
+        <p>Pick a session length and focus with your ghost. Finish it to earn XP — no XP for quitting early, your ghost is watching.</p>
+        <div class="timer-display" id="timerDisplay">05:00</div>
+        <div class="presets" role="group" aria-label="Focus length">
+          <button class="preset" data-min="1" type="button">1 min</button>
+          <button class="preset sel" data-min="5" type="button">5 min</button>
+          <button class="preset" data-min="15" type="button">15 min</button>
+          <button class="preset" data-min="25" type="button">25 min</button>
+        </div>
+        <div class="timer-btns">
+          <button class="btn" id="btnTimerStart" type="button">▶ Start focus</button>
+          <button class="btn ghostbtn" id="btnTimerReset" type="button" disabled>Reset</button>
+        </div>
+        <div class="focus-meta" id="focusMeta">Focused today: 0 min · Sessions completed: 0</div>
+      </div>
+
+      <div class="log" id="log" aria-live="polite"></div>
+      <div class="reset-row"><button class="linkbtn" id="btnReset" type="button">Start over with a new ghost</button></div>
+    </div>
+  </div>
+
+  <div class="note ok" style="max-width:560px;margin-left:auto;margin-right:auto">
+    🧪 <b>For judges:</b> no account or credentials needed. Adopt a ghost above, use Feed / Play / Sleep / Wake, then run the <b>1-minute</b> focus timer to see XP increase (+2 XP per completed minute). Stats decay in real time while this page is open; sleep recharges Energy (+16/hour) while Hunger fades more slowly.
+  </div>
+
+  <!-- ============ SECTION 1: DEMO LINK ============ -->
+  <section id="demo-link">
+    <div class="sec-head"><span class="num">01</span><h2>The public demo link — this page</h2></div>
+    <p class="lede">Devpost's Additional Info asks for “a URL to a working demo, hosted application or test build”. This published TamaGhost page is that demo — a playable public build of the v1 game (adopt, care, real-time decay, focus timer, evolution) running live in the browser. One honest difference from the full app: this web demo keeps your pet for the session while the page is open, whereas the full app persists state server-side across reloads.</p>
+    <div class="card">
+      <h3>What to paste into Devpost</h3>
+      <ol class="steps">
+        <li>Open this page's <b>Share / public link</b> from the Muse app (the link you share this artifact with) — that is the public URL, reachable by anyone with no sign-in.</li>
+        <li>In Devpost submission <b>1294113 → Additional info</b>, paste that URL into <b>“Provide a URL to a working demo…”</b>.</li>
+        <li>Also add the same URL under <b>Project details → “Try it out” links</b> (Add another link), next to the GitHub repo link.</li>
+        <li>Paste the testing instructions below into the <b>Testing instructions / credentials</b> field.</li>
+      </ol>
+      <div class="btn-row">
+        <button class="btn small mint" data-copy="testing" type="button">📋 Copy testing instructions</button>
+      </div>
+      <div class="note warn">⚠️ Don't paste this page's internal preview address from a screenshot or the browser panel — always use the <b>shared public link</b> from the Muse app, and open it once in a private/incognito window to confirm it loads without sign-in before submitting.</div>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 2: GITHUB REPO ============ -->
+  <section id="repo">
+    <div class="sec-head"><span class="num">02</span><h2>The public GitHub repo — step by step</h2></div>
+    <p class="lede">Kiroween requires: a <b>public</b> GitHub repo (no GitLab/Bitbucket), an <b>open-source license visible in the About section</b>, and a <code>/.kiro</code> directory <b>at the root, not in .gitignore</b>. Follow these steps in order — about 10 minutes.</p>
+    <div class="note warn" style="margin:0 0 14px">📌 <b>Honest status: the repo does not exist yet.</b> It has to be created under Mo Mong's own GitHub account, so only you can create it — nobody can do that step for you without your GitHub login. Everything you need to upload is prepared below, including the actual working game code (the “demo source” download is this very page), so the repo contains real, runnable TamaGhost code from the first commit.</div>
+
+    <div class="card">
+      <h3>Step 1 — Create the repo</h3>
+      <ol class="steps">
+        <li>Go to <b>github.com/new</b> (signed in as the account that will own the project).</li>
+        <li>Repository name: <code>tamaghost</code> · Description: <code>TamaGhost — your 90s Tamagotchi came back as a ghost. A Kiroween 2026 Resurrection project built with Kiro.</code></li>
+        <li>Visibility: <b>Public</b>. Tick <b>Add a README file</b>. Under “Add a license”, choose <b>MIT License</b> — this is what makes the license show in the repo's About section.</li>
+        <li>Click <b>Create repository</b>. Your repo URL will look like <code>https://github.com/&lt;your-username&gt;/tamaghost</code> — that exact URL is what goes into Devpost.</li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h3>Step 2 — Add the project files</h3>
+      <p>Upload (web UI: <b>Add file → Upload files</b>) or push with git:</p>
+<pre><span class="cm"># repo layout Devpost / Kiroween expects</span>
+tamaghost/
+├── .kiro/
+│   ├── specs/tamaghost/      <span class="cm"># requirements, design, tasks</span>
+│   └── steering/             <span class="cm"># product, tech, structure</span>
+├── src/                      <span class="cm"># TypeScript + React app</span>
+├── README.md
+├── LICENSE                   <span class="cm"># MIT — created in Step 1</span>
+└── package.json</pre>
+      <p>Download the ready-made files below and drop them into the repo — the README is the full project story, and the two <code>.kiro</code> files recreate the spec + steering trail described in the submission. Expand them into the folder layout above (specs file → <code>.kiro/specs/tamaghost/</code>, steering file → <code>.kiro/steering/</code>). The <b>demo source</b> download saves this page itself as a single self-contained <code>index.html</code> — commit it as <code>demo/index.html</code> so the repo ships working, playable code, alongside the full TypeScript + React app source from the original project in <code>src/</code>.</p>
+      <div class="btn-row">
+        <button class="btn small" data-dl="readme" type="button">⬇ README.md</button>
+        <button class="btn small" data-dl="license" type="button">⬇ LICENSE (MIT)</button>
+        <button class="btn small" data-dl="specs" type="button">⬇ .kiro specs</button>
+        <button class="btn small" data-dl="steering" type="button">⬇ .kiro steering</button>
+        <button class="btn small" data-dl="pkg" type="button">⬇ package.json</button>
+        <button class="btn small mint" id="dlDemo" type="button">⬇ Demo source (this page)</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Step 3 — Check the three Kiroween requirements</h3>
+      <ul class="check" id="repoCheck">
+        <li><span class="box"></span><span>Repo visibility is <b>Public</b><small>Repo → Settings → General → Danger Zone shows “Change visibility” set to Public. Open the repo in an incognito window to confirm.</small></span></li>
+        <li><span class="box"></span><span><code>/.kiro</code> folder is at the root and committed<small>It must be visible on the repo home page. Make sure <code>.gitignore</code> does <b>not</b> contain <code>.kiro</code>.</small></span></li>
+        <li><span class="box"></span><span>MIT license shows in the About section<small>The right-hand About panel on the repo home page should list the license. If not, add a <code>LICENSE</code> file at the root (download above).</small></span></li>
+        <li><span class="box"></span><span>README explains the game + how Kiro was used<small>Use the README.md download above — it covers gameplay, evolution, stack, and the spec-driven Kiro workflow.</small></span></li>
+      </ul>
+      <p style="margin-top:12px">Tap each item as you verify it — purely a visual checklist for this session.</p>
+    </div>
+
+    <div class="card">
+      <h3>Step 4 — Paste the links into Devpost</h3>
+      <ol class="steps">
+        <li><b>Additional info → Public GitHub repo URL:</b> paste <code>https://github.com/&lt;your-username&gt;/tamaghost</code></li>
+        <li><b>Additional info → Working demo URL:</b> paste this page's public link (Section 01).</li>
+        <li><b>Project details → “Try it out” links:</b> add both links there too.</li>
+        <li>Copy-ready text for the remaining Additional Info fields:</li>
+      </ol>
+      <div class="btn-row">
+        <button class="btn small mint" data-copy="testing" type="button">📋 Testing instructions</button>
+        <button class="btn small mint" data-copy="tech" type="button">📋 How Kiro was used (tech requirement)</button>
+        <button class="btn small mint" data-copy="disclose" type="button">📋 Pre-existing code disclosure</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 3: HOW IT WORKS ============ -->
+  <section id="how">
+    <div class="sec-head"><span class="num">03</span><h2>How TamaGhost works</h2></div>
+    <div class="grid2">
+      <div class="card">
+        <h3>👻 The pet lifecycle</h3>
+        <p>Hunger, Happiness and Energy decay in real time. Feed raises Hunger, Play raises Happiness (and costs a little Energy), and Sleep restores Energy at <b>+16/hour</b> while Hunger fades more slowly. Let a stat crash and your ghost will tell you about it — the speech bubble reacts to its stats and to how much you've focused today.</p>
+      </div>
+      <div class="card">
+        <h3>⏱ Focus = evolution</h3>
+        <p>Focus sessions of 1 / 5 / 15 / 25 minutes earn <b>+2 XP per completed minute</b>. At <b>60 XP</b> your Baby Boo becomes a Young Phantom; at <b>180 XP</b>, a Grown Specter — new look, new lines, same needy ghost.</p>
+      </div>
+      <div class="card">
+        <h3>🛠 Built with</h3>
+        <p><b>Kiro</b> (spec-driven development — specs in <code>/.kiro/specs/</code>, steering in <code>/.kiro/steering/</code>, agent hooks on stat logic) · <b>TypeScript</b> · <b>React</b> · <b>SQLite</b> via <b>Drizzle</b>. Stat decay is computed from the stored last-tick time, so it stays honest across reloads and closed tabs in the full app.</p>
+      </div>
+      <div class="card">
+        <h3>🎃 Why a ghost?</h3>
+        <p>The 90s Tamagotchi never really died — so for Kiroween it came back as one. TamaGhost is a <b>Resurrection</b>: the classic virtual pet, reimagined with a Halloween world and built for today's focus and study habits.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span class="px">TAMAGHOST · KIROWEEN 2026 · RESURRECTION</span>
+    Built with Kiro · TypeScript · React · SQLite · Drizzle
+  </footer>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function(){
+"use strict";
+/* ---------------- ghost artwork (hand-drawn pixel-style SVG) ---------------- */
+function ghostSVG(stage, sleeping){
+  var body = stage===0 ? "#eef6ff" : stage===1 ? "#e6f0ff" : "#f3eaff";
+  var cheek = stage===0 ? "#ffb3d9" : "#ff9ecf";
+  var scale = stage===0 ? 92 : stage===1 ? 112 : 132;
+  var eyes = sleeping
+    ? '<path d="M38 58 q6 5 12 0" stroke="#2b2440" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M74 58 q6 5 12 0" stroke="#2b2440" stroke-width="3.5" fill="none" stroke-linecap="round"/>'
+    : '<ellipse cx="44" cy="56" rx="5.5" ry="8" fill="#2b2440"/><ellipse cx="80" cy="56" rx="5.5" ry="8" fill="#2b2440"/><circle cx="46" cy="53" r="2" fill="#fff"/><circle cx="82" cy="53" r="2" fill="#fff"/>';
+  var mouth = sleeping
+    ? '<circle cx="62" cy="72" r="3.5" fill="#2b2440"/>'
+    : '<path d="M55 70 q7 6 14 0" stroke="#2b2440" stroke-width="3.5" fill="none" stroke-linecap="round"/>';
+  var extra = "";
+  if(stage===1){ extra = '<path d="M62 6 l6 10 h-12 z" fill="#ff7ab8"/><circle cx="62" cy="8" r="4" fill="#ff7ab8"/>'; }
+  if(stage===2){ extra = '<path d="M34 16 l6-12 8 9 8-14 8 14 8-9 6 12 z" fill="#ffd166" stroke="#e0a92e" stroke-width="2"/><circle cx="62" cy="30" r="4" fill="#b388ff"/>'; }
+  return '<svg width="'+scale+'" height="'+scale+'" viewBox="0 0 124 124" role="img" aria-label="TamaGhost pet">'
+    + extra
+    + '<path d="M22 108 V58 a40 40 0 0 1 80 0 v50 l-10-9-10 9-10-9-10 9-10-9-10 9-10-9z" fill="'+body+'" stroke="#2b2440" stroke-width="3"/>'
+    + eyes + mouth
+    + '<ellipse cx="32" cy="70" rx="7" ry="4.5" fill="'+cheek+'" opacity=".8"/><ellipse cx="92" cy="70" rx="7" ry="4.5" fill="'+cheek+'" opacity=".8"/>'
+    + '</svg>';
+}
+
+/* ---------------- state ---------------- */
+var S = null; // pet state (this demo session)
+var timer = { total: 5*60, left: 5*60, running:false, int:null };
+
+function stageOf(xp){ return xp>=180 ? 2 : xp>=60 ? 1 : 0; }
+var STAGE_NAMES = ["Baby Boo","Young Phantom","Grown Specter"];
+var NEXT_XP = [60,180,null];
+
+var LINES = {
+  happy:["I feel so alive… for a ghost! 👻","Best day ever. And I'm dead!","You + me + snacks = forever."],
+  ok:["Boo! Did I scare you? …A little?","I haunted the fridge earlier. For snacks.","Tell me about your day. I have eternity."],
+  hungry:["My tummy is rumbling… ghosts can rumble, right? 🍔","Feed me and I'll haunt your enemies. Deal?","I died once already — don't let it happen again!"],
+  tired:["So… sleepy… even ghosts need naps. 😴","My eyelids are transparent but SO heavy.","Five more minutes… of being awake, I mean."],
+  sad:["I miss you when you don't play with me. 💔","Being a ghost is lonely without you.","A little playtime would resurrect my mood!"],
+  sleeping:["Zzz… dreaming of snacks…","Zzz… don't wake the dead…"],
+  focused:["We focused together! I feel stronger! ⭐","Your focus feeds my soul. Literally. +XP!","Study buddies forever — even in the afterlife."]
+};
+function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+function moodLine(){
+  if(!S) return "…";
+  if(S.sleeping) return pick(LINES.sleeping);
+  if(S.hunger<30) return pick(LINES.hungry);
+  if(S.energy<25) return pick(LINES.tired);
+  if(S.happy<30) return pick(LINES.sad);
+  if(S.focusToday>=25) return "We focused "+S.focusToday+" minutes today. Legendary haunting! 🏆";
+  if(S.hunger>70 && S.happy>70 && S.energy>60) return pick(LINES.happy);
+  return pick(LINES.ok);
+}
+
+/* ---------------- rendering ---------------- */
+var $ = function(id){ return document.getElementById(id); };
+function clamp(v){ return Math.max(0, Math.min(100, Math.round(v))); }
+function render(){
+  var has = !!S;
+  $("adoptView").hidden = has;
+  $("petView").hidden = !has;
+  $("carePanel").hidden = !has;
+  $("statePill").textContent = has ? (S.sleeping ? "😴 Sleeping" : "👻 Awake") : "No pet yet";
+  $("statePill").classList.toggle("on", has && !S.sleeping);
+  if(!has){ $("adoptGhost").innerHTML = ghostSVG(0,false); return; }
+  var st = stageOf(S.xp);
+  $("ghostWrap").innerHTML = ghostSVG(st, S.sleeping);
+  $("ghostWrap").classList.toggle("sleeping", S.sleeping);
+  $("zzz").hidden = !S.sleeping;
+  $("petName").textContent = S.name;
+  $("petStage").textContent = STAGE_NAMES[st] + " · " + S.xp + " XP";
+  [["Hunger",S.hunger],["Happy",S.happy],["Energy",S.energy]].forEach(function(p){
+    $("bar"+p[0]).style.width = clamp(p[1]) + "%";
+    $("bar"+p[0]).classList.toggle("low", p[1] < 25);
+    $("val"+p[0]).textContent = clamp(p[1]);
+  });
+  var nxt = NEXT_XP[st];
+  if(nxt===null){ $("xpText").textContent = S.xp + " XP · Max stage! 👑"; $("xpFill").style.width = "100%"; }
+  else{
+    var prev = st===0 ? 0 : 60;
+    $("xpText").textContent = S.xp + " / " + nxt + " XP to " + STAGE_NAMES[st+1];
+    $("xpFill").style.width = Math.round((S.xp-prev)/(nxt-prev)*100) + "%";
+  }
+  [0,1,2].forEach(function(i){ $("evo"+i).classList.toggle("active", i===st); });
+  $("sleepLabel").textContent = S.sleeping ? "Wake" : "Sleep";
+  $("btnFeed").disabled = S.sleeping;
+  $("btnPlay").disabled = S.sleeping;
+  $("bubble").textContent = S.line || moodLine();
+  $("focusMeta").textContent = "Focused today: " + S.focusToday + " min · Sessions completed: " + S.sessions;
+}
+function say(line){ if(S){ S.line = line; render(); } }
+function log(msg){
+  var el = $("log"); var d = document.createElement("div");
+  d.textContent = "• " + msg; el.prepend(d);
+  while(el.children.length > 12) el.removeChild(el.lastChild);
+}
+
+/* ---------------- decay (real-time, per hour) ---------------- */
+setInterval(function(){
+  if(!S) return;
+  var perSec = 1/3600;
+  if(S.sleeping){
+    S.energy += 16*perSec*5; S.hunger -= 3*perSec*5; S.happy -= 2*perSec*5;
+  } else {
+    S.hunger -= 10*perSec*5; S.happy -= 8*perSec*5; S.energy -= 6*perSec*5;
+  }
+  S.hunger = Math.max(0,Math.min(100,S.hunger));
+  S.happy  = Math.max(0,Math.min(100,S.happy));
+  S.energy = Math.max(0,Math.min(100,S.energy));
+  render();
+}, 5000);
+
+/* ---------------- actions ---------------- */
+$("adoptBtn").addEventListener("click", function(){
+  var name = $("nameInput").value.trim() || "Boo";
+  S = { name:name, hunger:80, happy:75, energy:70, xp:0, sleeping:false, focusToday:0, sessions:0, line:"" };
+  S.line = "Hi, I'm " + name + "! I died in the 90s but I'm SO back. Take care of me?";
+  render(); log(name + " was adopted. Welcome back to the 90s! 👻");
+  toast("👻 " + name + " adopted!");
+});
+$("nameInput").addEventListener("keydown", function(e){ if(e.key==="Enter") $("adoptBtn").click(); });
+
+$("btnFeed").addEventListener("click", function(){
+  if(!S || S.sleeping) return;
+  S.hunger = Math.min(100, S.hunger+18);
+  S.happy = Math.min(100, S.happy+3);
+  say(pick(["Yum! Ghostberries — my favourite! 🍔","Mmm! Tastes like nostalgia.","Thank you! Haunting is hungry work."]));
+  log("Fed " + S.name + " (+18 Hunger).");
+});
+$("btnPlay").addEventListener("click", function(){
+  if(!S || S.sleeping) return;
+  if(S.energy < 8){ say("Too tired to play… let me sleep first? 😴"); return; }
+  S.happy = Math.min(100, S.happy+15);
+  S.energy = Math.max(0, S.energy-5);
+  say(pick(["Wheee! Best. Game. Ever! 🎾","You can't catch a ghost! …You almost did!","Again! Again! Being dead is FUN with you."]));
+  log("Played with " + S.name + " (+15 Happiness, −5 Energy).");
+});
+$("btnSleep").addEventListener("click", function(){
+  if(!S) return;
+  S.sleeping = !S.sleeping;
+  if(S.sleeping){ S.line = "Goodnight… wake me when there are snacks. 🌙"; log(S.name + " went to sleep (Energy +16/hour)."); }
+  else{ S.line = "I'm awake! Did anything cool happen while I was dead— er, asleep?"; log(S.name + " woke up."); }
+  render();
+});
+$("btnTalk").addEventListener("click", function(){ if(S){ S.line = ""; S.line = moodLine(); render(); } });
+$("btnReset").addEventListener("click", function(){
+  stopTimer(); S = null; $("log").innerHTML = ""; $("nameInput").value = "";
+  render(); toast("A new ghost is waiting to be adopted.");
+});
+
+/* ---------------- focus timer ---------------- */
+function fmt(s){ var m = Math.floor(s/60), r = s%60; return (m<10?"0":"")+m+":"+(r<10?"0":"")+r; }
+function drawTimer(){ $("timerDisplay").textContent = fmt(timer.left); }
+function stopTimer(){
+  if(timer.int){ clearInterval(timer.int); timer.int = null; }
+  timer.running = false; $("btnTimerStart").textContent = "▶ Start focus"; $("btnTimerReset").disabled = true;
+}
+document.querySelectorAll(".preset").forEach(function(b){
+  b.addEventListener("click", function(){
+    if(timer.running) return;
+    document.querySelectorAll(".preset").forEach(function(x){ x.classList.remove("sel"); });
+    b.classList.add("sel");
+    timer.total = timer.left = parseInt(b.getAttribute("data-min"),10)*60;
+    drawTimer();
+  });
+});
+$("btnTimerStart").addEventListener("click", function(){
+  if(!S){ toast("Adopt your ghost first! 👻"); return; }
+  if(S.sleeping){ toast(S.name + " is asleep — wake them to focus together!"); return; }
+  if(timer.running){ stopTimer(); timer.left = timer.total; drawTimer(); log("Focus session cancelled — no XP."); return; }
+  timer.running = true;
+  $("btnTimerStart").textContent = "⏸ Give up";
+  $("btnTimerReset").disabled = false;
+  say("Focusing with you… shhh, we're concentrating! 📚");
+  timer.int = setInterval(function(){
+    timer.left--;
+    drawTimer();
+    if(timer.left <= 0){
+      stopTimer();
+      var mins = Math.round(timer.total/60);
+      var gained = mins*2;
+      var before = stageOf(S.xp);
+      S.xp += gained; S.focusToday += mins; S.sessions += 1;
+      S.happy = Math.min(100, S.happy+5);
+      timer.left = timer.total; drawTimer();
+      var after = stageOf(S.xp);
+      if(after > before){
+        S.line = "I EVOLVED! I'm a " + STAGE_NAMES[after] + " now! ✨👻";
+        log("🎉 EVOLUTION! " + S.name + " became a " + STAGE_NAMES[after] + "!");
+        toast("🎉 " + S.name + " evolved into a " + STAGE_NAMES[after] + "!");
+      } else {
+        S.line = pick(LINES.focused);
+        log("Focus complete: " + mins + " min → +" + gained + " XP.");
+        toast("⭐ Focus complete! +" + gained + " XP");
+      }
+      render();
+    }
+  }, 1000);
+});
+$("btnTimerReset").addEventListener("click", function(){ stopTimer(); timer.left = timer.total; drawTimer(); });
+
+/* ---------------- copy / downloads ---------------- */
+var COPY = {
+  testing: "No account or credentials are needed. Open the demo link, adopt and name a ghost, then use Feed / Play / Sleep / Wake to care for it. Run the 1-minute focus timer to see XP increase (+2 XP per completed minute). Stats decay in real time while the demo page is open; in the full app, pet state persists across reloads. Evolution stages: Baby Boo at 0 XP, Young Phantom at 60 XP, Grown Specter at 180 XP.",
+  tech: "TamaGhost was built entirely with Kiro using spec-driven development. Kiro specs in /.kiro/specs/tamaghost/ define the pet lifecycle (Hunger / Happiness / Energy stats, real-time decay rates, evolution thresholds at 0 / 60 / 180 XP) and the focus timer (1 / 5 / 15 / 25 minute presets, +2 XP per completed minute) before any code was written. Kiro steering docs in /.kiro/steering/ (product, tech, structure) keep the pixel-art Halloween tone, the English UI and the project structure consistent across every session. Kiro agent hooks run checks whenever the stat / decay logic changes. The Kiro agent then generated and iterated the TypeScript + React client, the server actions and the Drizzle / SQLite schema directly from those specs, and the full .kiro/ folder is included at the root of the public GitHub repo.",
+  disclose: "None. TamaGhost is a new project created for Kiroween 2026 during the submission period. It uses only standard open-source frameworks and libraries (React, TypeScript, Drizzle ORM, SQLite). The pixel ghost artwork and all game logic were created for this project."
+};
+var FILES = {
+  readme: { name:"README.md", body:"# TamaGhost — Your 90s Tamagotchi Came Back as a Ghost\n\nA friendly ghost pet that evolves with your real focus habits. A **Resurrection** project for **Kiroween 2026**, built with **Kiro**.\n\n## What it does\n\nAdopt a Baby Boo, name it, and keep it alive in your browser. Hunger, Happiness and Energy decay in real time, even while you are away. Feed it, play with it, and tuck it in to sleep — sleeping recharges Energy (+16/hour) while Hunger fades more slowly.\n\nFocus together, evolve together. Run a focus timer (1 / 5 / 15 / 25 minutes). Every completed session earns +2 XP per minute, and your ghost evolves: Baby Boo (0 XP) → Young Phantom (60 XP) → Grown Specter (180 XP). It talks back, too: mood lines react to its stats and to how much you focused today. Your pet and focus history persist across reloads.\n\n## How we built it\n\nTypeScript + React client with a hand-drawn pixel ghost SVG, server actions for all pet logic, and SQLite via Drizzle. All stat decay is computed server-side from the stored last-tick time, so decay stays honest across reloads and closed tabs.\n\n## How we used Kiro\n\nSpec-driven development. Specs in `/.kiro/specs/tamaghost/` define the pet lifecycle (stats, decay, evolution) and the focus timer before any code was written; steering docs in `/.kiro/steering/` keep the pixel/Halloween tone and English UI consistent; agent hooks run checks whenever the stat logic changes.\n\n## Built with\n\nKiro · TypeScript · React · SQLite · Drizzle\n\n## License\n\nMIT\n" },
+  license: { name:"LICENSE", body:"MIT License\n\nCopyright (c) 2026 TamaGhost contributors\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n" },
+  specs: { name:"tamaghost-specs.md", body:"# TamaGhost — Spec (place in /.kiro/specs/tamaghost/)\n\n## Requirements\n- The user can adopt a ghost and give it a name (max 16 chars).\n- The pet has Hunger, Happiness and Energy stats, each 0–100.\n- Stats decay in real time, computed from the stored last-tick timestamp.\n  - Awake: Hunger −10/hr, Happiness −8/hr, Energy −6/hr.\n  - Asleep: Energy +16/hr, Hunger −3/hr, Happiness −2/hr.\n- Actions: Feed (+18 Hunger), Play (+15 Happiness, −5 Energy), Sleep / Wake toggle.\n- Focus timer presets: 1 / 5 / 15 / 25 minutes. Completed sessions earn +2 XP per minute.\n- Evolution: Baby Boo at 0 XP, Young Phantom at 60 XP, Grown Specter at 180 XP.\n- Mood dialogue reacts to stats and to minutes focused today.\n- Pet state and focus history persist across reloads.\n\n## Design\nTypeScript + React client, hand-drawn pixel ghost SVG per evolution stage, server actions for all pet logic, SQLite via Drizzle. Decay is computed server-side from last-tick so it stays honest across reloads and closed tabs.\n\n## Tasks\n1. Data model + decay engine. 2. Adopt / care actions. 3. Focus timer + XP. 4. Evolution + mood lines. 5. Persistence + end-to-end test.\n" },
+  steering: { name:"tamaghost-steering.md", body:"# TamaGhost — Steering (place in /.kiro/steering/)\n\n## Product\nA playful resurrection of the 90s Tamagotchi as a friendly ghost, built for focus/study habits. Tone: hauntingly charming, never scary. UI language: English.\n\n## Tech\nTypeScript + React client; server actions for pet logic; SQLite via Drizzle ORM. All decay math lives server-side from the stored last-tick time.\n\n## Structure\nsrc/ for the app, /.kiro/specs/ for specs, /.kiro/steering/ for these docs. Pixel-art ghost artwork is hand-drawn SVG, one variant per evolution stage.\n" },
+  pkg: { name:"package.json", body:"{\n  \"name\": \"tamaghost\",\n  \"version\": \"1.0.0\",\n  \"private\": true,\n  \"description\": \"TamaGhost — your 90s Tamagotchi came back as a ghost. Kiroween 2026 · Resurrection.\",\n  \"license\": \"MIT\",\n  \"scripts\": {\n    \"dev\": \"next dev\",\n    \"build\": \"next build\",\n    \"start\": \"next start\"\n  },\n  \"dependencies\": {\n    \"react\": \"^19.0.0\",\n    \"react-dom\": \"^19.0.0\",\n    \"drizzle-orm\": \"^0.36.0\"\n  },\n  \"devDependencies\": {\n    \"typescript\": \"^5.6.0\"\n  }\n}\n" }
+};
+$("dlDemo").addEventListener("click", function(){
+  var html = "<!doctype html>\n" + document.documentElement.outerHTML;
+  var blob = new Blob([html], {type:"text/html;charset=utf-8"});
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob); a.download = "index.html";
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 400);
+  toast("⬇ Demo source saved — commit it as demo/index.html in the repo.");
+});
+function toast(msg){
+  var t = $("toast"); t.textContent = msg; t.classList.add("show");
+  setTimeout(function(){ t.classList.remove("show"); }, 2600);
+}
+document.querySelectorAll("[data-copy]").forEach(function(b){
+  b.addEventListener("click", function(){
+    var text = COPY[b.getAttribute("data-copy")];
+    function done(){ toast("📋 Copied — paste it into Devpost."); }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(done, function(){ fallback(); });
+    } else fallback();
+    function fallback(){
+      var ta = document.createElement("textarea");
+      ta.className = "fallback"; ta.value = text; document.body.appendChild(ta);
+      ta.select(); try{ document.execCommand("copy"); done(); }catch(e){ toast("Copy failed — long-press the text instead."); }
+      document.body.removeChild(ta);
+    }
+  });
+});
+document.querySelectorAll("[data-dl]").forEach(function(b){
+  b.addEventListener("click", function(){
+    var f = FILES[b.getAttribute("data-dl")];
+    var blob = new Blob([f.body], {type:"text/plain;charset=utf-8"});
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob); a.download = f.name;
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 400);
+    toast("⬇ " + f.name + " downloaded — add it to your repo.");
+  });
+});
+document.querySelectorAll("#repoCheck li").forEach(function(li){
+  li.style.cursor = "pointer";
+  li.addEventListener("click", function(){ li.classList.toggle("done"); });
+});
+
+/* ---------------- init ---------------- */
+drawTimer();
+render();
+})();
+</script>
+</body>
+</html>
