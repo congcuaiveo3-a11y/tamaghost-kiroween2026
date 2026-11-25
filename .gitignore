@@ -1,0 +1,9 @@
+node_modules/
+dist/
+*.tsbuildinfo
+app.db
+app.db-wal
+app.db-shm
+.space-build/
+.space-build-cvm/
+.harness/
